@@ -37,8 +37,8 @@ exports.put = function (service, day, apiKey, country, from, to, threshold) {
     var keyBD = "";
     var connectionAPI = mysql.createConnection({
       host: 'localhost',
-      user: 'root',
-      password: '',
+      user: 'apiUser',
+      password: '4P12018.txm@',
       database: 'api',
       port: 3306
     });
@@ -79,8 +79,8 @@ exports.put = function (service, day, apiKey, country, from, to, threshold) {
 
         var connectionCDR = mysql.createConnection({
           host: 'localhost',
-          user: 'root',
-          password: '',
+          user: 'apiUser',
+          password: '4P12018.txm@',
           database: 'cdr',
           port: 3306
         });
