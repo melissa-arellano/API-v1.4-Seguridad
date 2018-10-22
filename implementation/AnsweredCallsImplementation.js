@@ -42,8 +42,8 @@ exports.put = function (service, day, apiKey, country, from, to, threshold) {
         var keyBD = "";
         var connectionAPI = mysql.createConnection({
             host: 'localhost',
-            user: 'apiUser',
-            password: '4P12018.txm@',
+            user: 'root',
+            password: '',
             database: 'api',
             port: 3306
         });
@@ -84,9 +84,9 @@ exports.put = function (service, day, apiKey, country, from, to, threshold) {
 
                 var connectionCDR = mysql.createConnection({
                     host: 'localhost',
-                    user: 'apiUser',
-                    password: '4P12018.txm@',
-                    database: 'asteriskcdrdb',
+                    user: 'root',
+                    password: '',
+                    database: 'cdr',
                     port: 3306
                 });
 
@@ -153,7 +153,7 @@ exports.put = function (service, day, apiKey, country, from, to, threshold) {
                         var tamanioLimite = limiteString.length;
 
                         if (tamanioLimite == 2) {
-                            var queryString = 'SELECT COUNT(*) AS Total FROM tiemposesperallamadascontestadas WHERE Fecha LIKE "' + [fecha] + '%" AND Tiempo <= "00:00:' + limite + '"';
+                            var queryString = 'SELECT COUNT(*) AS Total FROM TiemposEsperaLlamadasContestadas WHERE Fecha LIKE "' + [fecha] + '%" AND Tiempo <= "00:00:' + limite + '"';
                             connectionCDR.query(queryString, [fecha], function (err, rows, fields) {
                                 //console.log(queryString);
                                 if (err) throw err;
@@ -237,7 +237,7 @@ exports.put = function (service, day, apiKey, country, from, to, threshold) {
                             country = 'Mexico';
                         }
 
-                        var queryString = 'SELECT COUNT(*) AS Total FROM tiemposesperallamadascontestadas WHERE Fecha BETWEEN "' + [fecha] + " " + [horaInicio] + '" AND "' + [fecha] + " " + [horaFinal] + '" AND Tiempo <= "00:00:' + limite + '"';
+                        var queryString = 'SELECT COUNT(*) AS Total FROM TiemposEsperaLlamadasContestadas WHERE Fecha BETWEEN "' + [fecha] + " " + [horaInicio] + '" AND "' + [fecha] + " " + [horaFinal] + '" AND Tiempo <= "00:00:' + limite + '"';
                         connectionCDR.query(queryString, [fecha], function (err, rows, fields) {
                             console.log(queryString);
                             if (err) throw err;
@@ -273,7 +273,7 @@ exports.put = function (service, day, apiKey, country, from, to, threshold) {
                             country = 'Mexico';
                         }
 
-                        var queryString = 'SELECT COUNT(*) AS Total FROM tiemposesperallamadascontestadas WHERE Fecha BETWEEN "' + [fecha] + " " + [horaInicio] + '" AND "' + [fecha] + " " + [horaFinal] + '"';
+                        var queryString = 'SELECT COUNT(*) AS Total FROM TiemposEsperaLlamadasContestadas WHERE Fecha BETWEEN "' + [fecha] + " " + [horaInicio] + '" AND "' + [fecha] + " " + [horaFinal] + '"';
                         connectionCDR.query(queryString, [fecha], function (err, rows, fields) {
                             console.log(queryString);
                             if (err) throw err;
