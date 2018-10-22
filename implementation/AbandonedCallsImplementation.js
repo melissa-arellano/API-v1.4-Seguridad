@@ -1,12 +1,12 @@
-//var TravelOrderImpl = require('../implementation/TravelOrderImpl');
-//var examples = TravelOrderImpl.get();
+//var AbandonedCallsImplementation = require('../implementation/AbandonedCallsImplementation');
 
 
 exports.put = function (service, day, apiKey, country, from, to, threshold) {
-
-  console.log('\n\n--------------------- LOG -----------------------\n ');
-  console.log("\n Entrando a Abandoned Calls Implementation... \n");
   return new Promise((resolve, reject) => {
+
+
+    console.log('\n\n--------------------- LOG -----------------------\n ');
+    console.log("\n Entrando a ABANDONED Calls Implementation... \n");
 
     var mysql = require('mysql'); // Incluimos el modulo de MySQL
     var crypto = require('crypto'); //Hash MD5
@@ -54,12 +54,12 @@ exports.put = function (service, day, apiKey, country, from, to, threshold) {
     var promesaConAPI = new Promise((resolve, reject) => { // PROMESA PARA CONEXION API BD
 
       // SELECT PARA VALIDAR EL API KEY
-      var queryString = 'SELECT apikey FROM apiKey WHERE id = ?';
-      connectionAPI.query(queryString, [numeroServicio], function (err, result) {
-        if (err) reject(err)
-
-        //console.log(result[0])
-        apiKeyBD = result[0].apikey;
+      var queryString = 'SELECT apikey as llave from apikey where id= ?';
+      connectionAPI.query(queryString, [numeroServicio], function (err, rows, fields) {
+        console.log(queryString);
+        if (err) throw err;
+        var apiKeyBD = rows[0].llave;
+        console.log('API KEY de la BD' + apiKeyBD);
 
         if (apiKeyBD == passwordHash) {
           console.log('\n Las contraseñas coinciden');
@@ -145,7 +145,7 @@ exports.put = function (service, day, apiKey, country, from, to, threshold) {
 
             var queryString = 'SELECT COUNT(*) AS Total FROM cdr WHERE calldate LIKE "' + [fecha] + '%" AND lastapp="Queue" AND dstchannel="" AND accountcode LIKE "%' + servicio + '%" AND billsec <= ' + limite + '';
             connectionCDR.query(queryString, [fecha], function (err, rows, fields) {
-              console.log(queryString);  
+              console.log(queryString);
               if (err) throw err;
               var Total = rows[0].Total;
               console.log('Total llamadas abandonadas: ' + Total);
@@ -192,7 +192,7 @@ exports.put = function (service, day, apiKey, country, from, to, threshold) {
             }
             var queryString = 'SELECT COUNT(*) AS Total FROM cdr WHERE calldate LIKE "' + [fecha] + '%" AND lastapp="Queue" AND dstchannel=" " AND accountcode LIKE "%' + servicio + '%" AND calldate BETWEEN " ' + [fecha] + ' ' + [horaInicio] + '" AND "' + [fecha] + ' ' + [horaFinal] + '" AND BILLSEC <= ' + limite + '';
             connectionCDR.query(queryString, [fecha], function (err, rows, fields) {
-              console.log(queryString);  
+              console.log(queryString);
               if (err) throw err;
               var Total = rows[0].Total;
               console.log('Total llamadas abandonadas: ' + Total);
@@ -229,7 +229,7 @@ exports.put = function (service, day, apiKey, country, from, to, threshold) {
 
             var queryString = 'SELECT COUNT(*) AS Total FROM cdr WHERE calldate LIKE "' + [fecha] + '%" AND lastapp="Queue" AND dstchannel="" AND accountcode LIKE "%' + service + '%" AND calldate BETWEEN " ' + [fecha] + ' ' + [horaInicio] + '" AND "' + [fecha] + ' ' + [horaFinal] + '"';
             connectionCDR.query(queryString, [fecha], function (err, rows, fields) {
-              console.log(queryString);  
+              console.log(queryString);
               if (err) throw err;
               var Total = rows[0].Total;
               console.log('Total llamadas abandonadas: ' + Total);
