@@ -14,33 +14,37 @@
  * threshold Integer Number representing seconds (optional)
  * returns List
  **/
+var AnsweredCallsImplementation = require('../implementation/AnsweredCallsImplementation');
 exports.getAnsweredCalls = function(service,day,apiKey,country,from,to,threshold) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
+    
+    AnsweredCallsImplementation.put(service,day,apiKey,country,from,to,threshold).then((result)=>{
+      if (Object.keys(result).length > 0) {
+        resolve(result)
+      } else {
+        resolve();
+      }
+    }).catch((err) => {
+      reject(err);
+    });
+    })
+    
+    /*var examples = {};
     examples['application/json'] = [ {
-  "Service" : "ACARI",
-  "Day" : "2018-02-10",
-  "Country" : "Jamaica",
-  "CallsAnswered" : 100,
-  "From" : "08:00",
-  "To" : "15:00",
-  "Threshold" : 45,
-  "apiKey" : "**********"
-}, {
-  "Service" : "ACARI",
-  "Day" : "2018-02-10",
-  "Country" : "Jamaica",
-  "CallsAnswered" : 100,
-  "From" : "08:00",
-  "To" : "15:00",
-  "Threshold" : 45,
-  "apiKey" : "**********"
-} ];
+      "Service" : "ACARI",
+      "Day" : "2018-02-10",
+      "Country" : "Jamaica",
+      "CallsAnswered" : 100,
+      "From" : "08:00",
+      "To" : "15:00",
+      "Threshold" : 45,
+      "apiKey" : "**********"
+    }];
+
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
       resolve();
-    }
-  });
+    }*/
 }
 
